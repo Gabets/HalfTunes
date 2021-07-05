@@ -10,7 +10,6 @@ class DownloadService {
   /// SearchViewController creates downloadsSession
   var downloadsSession: URLSession!
 
-  // TODO 9
   func cancelDownload(_ track: Track) {
     guard let download = activeDownloads[track.previewURL] else {
       return
@@ -50,7 +49,6 @@ class DownloadService {
     download.isDownloading = true
   }
   
-  // TODO 8
   func startDownload(_ track: Track) {
     let download = Download(track: track)
     download.task = downloadsSession.downloadTask(with: track.previewURL)

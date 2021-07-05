@@ -1,9 +1,7 @@
 
 import UIKit
 
-//
 // MARK: - Track Cell Delegate Protocol
-//
 protocol TrackCellDelegate {
   func cancelTapped(_ cell: TrackCell)
   func downloadTapped(_ cell: TrackCell)

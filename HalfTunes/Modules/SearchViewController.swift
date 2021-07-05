@@ -106,11 +106,11 @@ class SearchViewController: UIViewController {
     return imageView
   }
   
-  func localFilePath(for url: URL) -> URL {
+  private func localFilePath(for url: URL) -> URL {
     return documentsPath.appendingPathComponent(url.lastPathComponent)
   }
   
-  func playDownload(_ track: Track) {
+  private func playDownload(_ track: Track) {
     let playerViewController = AVPlayerViewController()
     present(playerViewController, animated: true, completion: nil)
     
@@ -130,7 +130,7 @@ class SearchViewController: UIViewController {
     player.play()
   }
   
-  func reload(_ row: Int) {
+  private func reload(_ row: Int) {
     tableView.reloadRows(at: [IndexPath(row: row, section: 0)], with: .none)
   }
   
@@ -327,20 +327,17 @@ extension SearchViewController: URLSessionDownloadDelegate {
   func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask,
                     didWriteData bytesWritten: Int64, totalBytesWritten: Int64,
                     totalBytesExpectedToWrite: Int64) {
-    // 1
     guard let url = downloadTask.originalRequest?.url,
           let download = downloadService.activeDownloads[url]
       else {
         return
     }
-    // 2
+
     download.progress =
       Float(totalBytesWritten) / Float(totalBytesExpectedToWrite)
-    // 3
     let totalSize =
       ByteCountFormatter.string(fromByteCount: totalBytesExpectedToWrite,
                                 countStyle: .file)
-    // 4
     DispatchQueue.main.async {
       if let trackCell =
         self.tableView.cellForRow(at: IndexPath(row: download.track.index,
